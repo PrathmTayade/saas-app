@@ -1,30 +1,35 @@
+"use client";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import React from "react";
-import { buttonVariants } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
+import { signIn, signOut, useSession } from "next-auth/react";
 
-const SignIn = async ({}) => {
-  const session = await getServerSession(authOptions);
-  
-  console.log("session", session);
+const SignIn = ({}) => {
+  const { data, status } = useSession();
+
+  console.log("session", data, status);
 
   return (
     <>
-      {session ? (
-        <Link
-          href={"/api/auth/signout"}
-          className={buttonVariants({ size: "sm", variant: "destructive" })}
+      {status === "authenticated" ? (
+        <Button
+          onClick={() => signOut({ callbackUrl: "/dashboard" })}
+          variant={"default"}
+          size={"sm"}
         >
           Log out
-        </Link>
+        </Button>
       ) : (
-        <Link
-          href={"/api/auth/signin"}
-          className={buttonVariants({ size: "sm", variant: "default" })}
+        //  Todo add user profile and image avatar and menu is possible too
+        <Button
+          onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+          variant={"ghost"}
+          size={"sm"}
         >
           Sign in
-        </Link>
+        </Button>
       )}
     </>
   );
