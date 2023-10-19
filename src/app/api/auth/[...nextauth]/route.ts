@@ -1,4 +1,8 @@
-import NextAuth, { AuthOptions, NextAuthOptions } from "next-auth";
+import NextAuth, {
+  AuthOptions,
+  NextAuthOptions,
+  getServerSession,
+} from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -43,21 +47,34 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
-      
     }),
   ],
 
   // TODO set up callbacks based on accounts providers to check for user or save it for both google and credentials
-  // callbacks: {
-  //   async session({ session, token }) {
-  //     // session.user = token.user;
-  //     return session;
-  //   },
-  //   async signIn({ user, account, profile, credentials }) {
-  //     console.log(user, account, profile, credentials);
-  //   },
-  // },
+  callbacks: {
+    async redirect({ url, baseUrl }) {
+      // Allows relative callback URLs
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) return url;
+      return baseUrl;
+    },
+    // async session({ session, token }) {
+    //   // session.user = token.user;
+    //   return session;
+    // },
+    // async signIn({ user, account, profile, credentials }) {
+    //   console.log(user, account, profile, credentials);
+    // },
+  },
 };
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
+
+/**
+ * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
+ *
+ * @see https://next-auth.js.org/configuration/nextjs
+ */
+export const getServerAuthSession = () => getServerSession(authOptions);

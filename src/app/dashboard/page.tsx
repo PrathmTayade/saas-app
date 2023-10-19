@@ -1,10 +1,7 @@
-import { getServerSession } from "next-auth";
-import React from "react";
-import { authOptions } from "../api/auth/[...nextauth]/route";
-import { getSession } from "next-auth/react";
+import { getServerAuthSession } from "../api/auth/[...nextauth]/route";
 
 const DashboardPage = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await getServerAuthSession();
   console.log(session);
 
   return (
