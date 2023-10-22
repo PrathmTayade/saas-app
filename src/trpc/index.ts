@@ -1,6 +1,6 @@
 import { getServerAuthSession } from "@/app/api/auth/[...nextauth]/route";
 import { publicProcedure, router } from "./trpc";
-import { AuthOptions, Session } from "next-auth";
+import { Session } from "next-auth";
 import { TRPCError } from "@trpc/server";
 export const appRouter = router({
   authCallback: publicProcedure.query(async () => {
@@ -10,9 +10,9 @@ export const appRouter = router({
     if (!session?.user?.email || !session?.user?.name) {
       throw new TRPCError({ code: "UNAUTHORIZED", message: "Unauthorized" });
     }
-     
+
     // check if user is in db
-    
+
     return { success: true };
   }),
 });
