@@ -1,18 +1,13 @@
+import { redirect } from "next/navigation";
 import { trpc } from "../_trpc/client";
 import { getServerAuthSession } from "../api/auth/[...nextauth]/route";
+import Dashboard from "@/components/Dashboard";
 
 const DashboardPage = async () => {
   const session = await getServerAuthSession();
-  console.log(session);
+  console.log("session in dashboardpage", session);
 
-  
-  //TODO continue from   https://youtu.be/ucX2zXAZ1I0?si=Cyz7qV56-GiDhlag&t=7354
-  return (
-    <div>
-      <div> email : {session?.user?.email}</div>
-      <div> username : {session?.user?.name}</div>
-    </div>
-  );
+  return <>{!session?.user ? <div>login plz</div> : <Dashboard />}</>;
 };
 
 export default DashboardPage;

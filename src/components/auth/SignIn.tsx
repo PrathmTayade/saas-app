@@ -17,7 +17,7 @@ const SignIn = ({}) => {
       {status === "authenticated" ? (
         <Button
           onClick={() => signOut({ callbackUrl: "/dashboard" })}
-          variant={"default"}
+          variant={"ghost"}
           size={"sm"}
         >
           Log out
@@ -27,7 +27,7 @@ const SignIn = ({}) => {
         <Button
           // onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
           onClick={() => router.push("api/auth/signin")}
-          variant={"ghost"}
+          variant={"default"}
           size={"sm"}
         >
           Sign in
