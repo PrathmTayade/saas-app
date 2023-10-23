@@ -4,6 +4,7 @@ import { getBaseUrl } from "@/lib/utils";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
 import { SessionProvider } from "next-auth/react";
+import { ThemeProvider } from "next-themes";
 import { ReactNode, useState } from "react";
 
 interface ProvidersProps {
@@ -20,7 +21,15 @@ const Providers = ({ children, session }: ProvidersProps) => {
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
+        {/* Dark Mode toggle also add suppressHydrationWarning to html tag */}
+        {/* <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        > */}
         <SessionProvider session={session}>{children}</SessionProvider>;
+        {/* </ThemeProvider> */}
       </QueryClientProvider>
     </trpc.Provider>
   );

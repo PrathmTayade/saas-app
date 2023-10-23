@@ -1,9 +1,7 @@
-import React from "react";
-import MaxWidthWrapper from "./MaxWidthWrapper";
 import Link from "next/link";
-import { buttonVariants } from "./ui/button";
-import { getServerSession } from "next-auth";
+import MaxWidthWrapper from "./MaxWidthWrapper";
 import SignIn from "./auth/SignIn";
+import { buttonVariants } from "./ui/button";
 
 const Navbar = () => {
   return (
@@ -25,6 +23,7 @@ const Navbar = () => {
                 Pricing
               </Link>
               <SignIn />
+              {/* <ModeToggle />  */}
             </>
           </div>
         </div>

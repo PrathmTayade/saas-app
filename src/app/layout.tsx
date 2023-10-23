@@ -21,6 +21,7 @@ export default async function RootLayout({
   const session = await getServerAuthSession();
 
   return (
+    // TODO add dark mode toggle suppressHydrationWarning to html tag
     <html lang="en" className="light">
       <body
         className={cn(
