@@ -22,10 +22,10 @@ export default async function RootLayout({
 
   return (
     // TODO add dark mode toggle suppressHydrationWarning to html tag
-    <html lang="en" className="light">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen font-sans antialiased grainy",
+          "min-h-screen font-sans antialiased ",
           inter.className
         )}
       >

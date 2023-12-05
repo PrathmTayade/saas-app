@@ -22,14 +22,14 @@ const Providers = ({ children, session }: ProvidersProps) => {
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
         {/* Dark Mode toggle also add suppressHydrationWarning to html tag */}
-        {/* <ThemeProvider
+        <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
-        > */}
+        >
         <SessionProvider session={session}>{children}</SessionProvider>;
-        {/* </ThemeProvider> */}
+        </ThemeProvider>
       </QueryClientProvider>
     </trpc.Provider>
   );

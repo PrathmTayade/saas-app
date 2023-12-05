@@ -1,13 +1,14 @@
 import Link from "next/link";
 import MaxWidthWrapper from "./MaxWidthWrapper";
-import SignIn from "./auth/SignIn";
+import SignInButton from "./auth/SignIn";
 import { buttonVariants } from "./ui/button";
+import { ModeToggle } from "./DarkmodeToggle";
 
 const Navbar = () => {
   return (
-    <nav className="sticky h-14 inset-x-0 top-0 z-30 w-full border-b border-gray-200 bg-white/75 backdrop-blur-lg transition-all">
+    <nav className="sticky h-14 inset-x-0 top-0 z-30 w-full border-b bg-background/75 border-border  backdrop-blur-lg transition-all">
       <MaxWidthWrapper>
-        <div className="flex h-14 items-center justify-between border-b border-zinc-200">
+        <div className="flex h-14 items-center justify-between border-b border-border">
           <Link href="/" className="flex z-40 font-semibold">
             <span>quill.</span>
           </Link>
@@ -22,8 +23,8 @@ const Navbar = () => {
               >
                 Pricing
               </Link>
-              <SignIn />
-              {/* <ModeToggle />  */}
+              <SignInButton />
+              <ModeToggle />
             </>
           </div>
         </div>

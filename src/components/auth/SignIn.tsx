@@ -6,8 +6,8 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { getServerAuthSession } from "@/app/api/auth/[...nextauth]/route";
 
-const SignIn = ({}) => {
-  const { data, status } = useSession();
+const SignInButton = ({}) => {
+  const { data, status  } = useSession();
   // const session = await  getServerAuthSession();
 
   console.log("session", data, status);
@@ -37,4 +37,4 @@ const SignIn = ({}) => {
   );
 };
 
-export default SignIn;
+export default SignInButton;

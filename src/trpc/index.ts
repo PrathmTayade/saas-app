@@ -1,7 +1,8 @@
 import { getServerAuthSession } from "@/app/api/auth/[...nextauth]/route";
-import { publicProcedure, router } from "./trpc";
+import { privateProcedure, publicProcedure, router } from "./trpc";
 import { Session } from "next-auth";
 import { TRPCError } from "@trpc/server";
+import { db } from "@/lib/db";
 export const appRouter = router({
   authCallback: publicProcedure.query(async () => {
     // ? check if async works
@@ -14,6 +15,15 @@ export const appRouter = router({
     // check if user is in db
 
     return { success: true };
+  }),
+  getUserFiles: privateProcedure.query(async ({ ctx }) => {
+    const { user, userId } = ctx;
+
+    return db.file.findMany({
+      where: {
+        userId,
+      },
+    });
   }),
 });
 // Export type router type signature,
