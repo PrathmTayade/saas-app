@@ -28,7 +28,7 @@ const Providers = ({ children, session }: ProvidersProps) => {
           enableSystem
           disableTransitionOnChange
         >
-        <SessionProvider session={session}>{children}</SessionProvider>;
+          <SessionProvider session={session}>{children}</SessionProvider>
         </ThemeProvider>
       </QueryClientProvider>
     </trpc.Provider>

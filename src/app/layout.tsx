@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Providers from "@/components/Providers";
 import { getServerAuthSession } from "./api/auth/[...nextauth]/route";
 
+import "react-loading-skeleton/dist/skeleton.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -24,10 +25,7 @@ export default async function RootLayout({
     // TODO add dark mode toggle suppressHydrationWarning to html tag
     <html lang="en" suppressHydrationWarning>
       <body
-        className={cn(
-          "min-h-screen font-sans antialiased ",
-          inter.className
-        )}
+        className={cn("min-h-screen font-sans antialiased ", inter.className)}
       >
         <Providers session={session}>
           <Navbar />

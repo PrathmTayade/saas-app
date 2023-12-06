@@ -5,8 +5,6 @@ import Dashboard from "@/components/Dashboard";
 
 const DashboardPage = async () => {
   const session = await getServerAuthSession();
-  console.log("session in dashboardpage", session);
-
   return <>{!session?.user ? <div>login plz</div> : <Dashboard />}</>;
 };
 
