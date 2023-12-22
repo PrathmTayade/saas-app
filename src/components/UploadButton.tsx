@@ -1,25 +1,28 @@
 "use client";
-import React, { useState } from "react";
+import { Cloud, File, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { Button } from "./ui/button";
 import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
-import { Button } from "./ui/button";
-import { Cloud, Copy, Loader2, File } from "lucide-react";
 
 import Dropzone from "react-dropzone";
 import { Progress } from "./ui/progress";
+import { useToast } from "./ui/use-toast";
+import { set } from "date-fns";
+import { useRouter } from "next/navigation";
 
 const UploadDropZone = ({ isSubscribed }: { isSubscribed: boolean }) => {
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
-  //  const { toast } = useToast();
+  const { toast } = useToast();
+  const router = useRouter();
 
   const startSimulation = () => {
     setUploadProgress(0);
@@ -38,17 +41,51 @@ const UploadDropZone = ({ isSubscribed }: { isSubscribed: boolean }) => {
     return interval;
   };
 
+  function generateId() {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+      /[xy]/g,
+      function (c) {
+        var r = (Math.random() * 16) | 0,
+          v = c == "x" ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      }
+    );
+  }
+
+  const startUpload = async (file: any) => {
+    // https://youtu.be/ucX2zXAZ1I0?si=RPHuXgOX7FLiBsrO&t=16582
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    return generateId();
+  };
+
   return (
     <Dropzone
       multiple={false}
-      onDrop={(acceptedFile) => {
+      onDrop={async (acceptedFile) => {
         console.log(acceptedFile);
         setIsUploading(true);
 
-        const progressInterval =startSimulation(
+        const progressInterval = startSimulation();
 
-          // handle the file uploading
-        )
+        // handle the file uploading
+
+        const res = await startUpload(acceptedFile);
+
+        if (!res) {
+          return toast({
+            title: "Something went wrong",
+            description: "Please try again later",
+            variant: "destructive",
+          });
+        }
+
+        const key = res;
+
+        router.push(`/dashboard/${key}`)
+
+        clearInterval(progressInterval);
+        setUploadProgress(100);
       }}
     >
       {({ getRootProps, getInputProps, acceptedFiles }) => (
@@ -127,10 +164,8 @@ const UploadButton = () => {
         }
       }}
     >
-      <DialogTrigger asChild>
-        <Button variant="default" onClick={() => setIsOpen(true)}>
-          Upload PDF
-        </Button>
+      <DialogTrigger asChild onClick={() => setIsOpen(true)}>
+        <Button variant="default">Upload PDF</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>

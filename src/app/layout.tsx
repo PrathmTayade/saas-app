@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Providers from "@/components/Providers";
 import { getServerAuthSession } from "./api/auth/[...nextauth]/route";
+import { Toaster } from "@/components/ui/toaster";
 
 import "react-loading-skeleton/dist/skeleton.css";
 const inter = Inter({ subsets: ["latin"] });
@@ -28,6 +29,7 @@ export default async function RootLayout({
         className={cn("min-h-screen font-sans antialiased ", inter.className)}
       >
         <Providers session={session}>
+          <Toaster />
           <Navbar />
           {children}
         </Providers>
